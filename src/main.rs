@@ -4,31 +4,6 @@ mod framebuffers;
 use raylib::prelude::*;
 use crate::framebuffers::Framebuffer;
 use crate::line::line;
-// Algoritmo scanline para rellenar un polígono
-fn scanline_fill(fb: &mut Framebuffer, poly: &[Vector2], color: Color) {
-    let min_y = poly.iter().map(|v| v.y as i32).min().unwrap_or(0);
-    let max_y = poly.iter().map(|v| v.y as i32).max().unwrap_or(0);
-    for y in min_y..=max_y {
-        let mut xs = vec![];
-        for i in 0..poly.len() {
-            let v1 = poly[i];
-            let v2 = poly[(i + 1) % poly.len()];
-            if (v1.y as i32 <= y && v2.y as i32 > y) || (v2.y as i32 <= y && v1.y as i32 > y) {
-                let x = v1.x + (y as f32 - v1.y) * (v2.x - v1.x) / (v2.y - v1.y);
-                xs.push(x as i32);
-            }
-        }
-        xs.sort();
-        for pair in xs.chunks(2) {
-            if pair.len() == 2 {
-                for x in pair[0]..=pair[1] {
-                    fb.set_current_color(color);
-                    fb.set_pixel(x as u32, y as u32);
-                }
-            }
-        }
-    }
-}
 fn main() {
     let mut fb = Framebuffer::new(2000, 2000, Color::WHITE);
     fb.set_background_color(Color::WHITE);
@@ -56,10 +31,10 @@ fn main() {
     ];
 
 
-    // Rellenar el polígono con scanline
-    scanline_fill(&mut fb, &poly, Color::YELLOW);
+    // No rellenar el polígono, solo dibujar los bordes
 
-    // Dibujar los lados del polígono
+    // Dibujar los lados del polígono en color amarillo
+    fb.set_current_color(Color::YELLOW);
     for window in poly.windows(2) {
         let start = window[0];
         let end = window[1];
