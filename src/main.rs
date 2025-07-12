@@ -32,24 +32,17 @@ fn scanline_fill(fb: &mut Framebuffer, poly: &[Vector2], color: Color) {
 fn main() {
     let mut fb = Framebuffer::new(600, 600, Color::WHITE);
     fb.set_background_color(Color::WHITE);
-    fb.set_current_color(Color::BLUE);
+    fb.set_current_color(Color::RED);
 
     let poly = vec![
-        Vector2::new(165.0, 380.0),
-        Vector2::new(185.0, 360.0),
-        Vector2::new(180.0, 330.0),
-        Vector2::new(207.0, 345.0),
-        Vector2::new(233.0, 330.0),
-        Vector2::new(230.0, 360.0),
-        Vector2::new(250.0, 380.0),
-        Vector2::new(220.0, 385.0),
-        Vector2::new(205.0, 410.0),
-        Vector2::new(193.0, 383.0),
+        Vector2::new(377.0, 249.0),
+        Vector2::new(411.0, 197.0),
+        Vector2::new(436.0, 249.0),
     ];
 
 
     // Rellenar el polígono con scanline
-    scanline_fill(&mut fb, &poly, Color::BLUE);
+    scanline_fill(&mut fb, &poly, Color::RED);
 
     // Dibujar los lados del polígono
     for window in poly.windows(2) {
@@ -59,6 +52,6 @@ fn main() {
     }
     line(&mut fb, poly[poly.len() - 1], poly[0]); // cerrar el polígono
 
-    fb.render_to_file("poligono.png");
-    println!("Polígono dibujado y guardado como 'poligono.png'!");
+    fb.render_to_file("poligonotres.png");
+    println!("Polígono dibujado y guardado como 'poligonotres.png'!");
 }
